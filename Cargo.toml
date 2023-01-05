@@ -1,0 +1,18 @@
+[package]
+name = "fplotd"
+version = "1.0.0"
+authors = ["Kamil Bicz"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+gnuplot = "0.0.37"
+
+[[bin]]
+name = "fplotd"
+path = "src/main.rs"
+
+[profile.release]
+lto = "thin"
+opt-level = 3
