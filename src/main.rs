@@ -31,7 +31,7 @@ fn helpf()
     println!("                 -tit   : plot title name.");
     println!("                 -lsty  : line style (def. Solid, SmallDot, Dot, Dash, DotDash, DotDotDash).");
     println!("                 -syms  : symbol style (def. \"O\").");
-    println!("                 -mars  : symbol size (def. 0.5).");
+    println!("                 -mars  : symbol size (def. 0.75).");
     println!("                 -xwid  : x width of window while displaying plot (default 1000 px).");  
     println!("                 -ywid  : y height of window while displaying plot (default 600 px).");
     println!("                 -xpos  : x position of plot window (variates from 0 to 1, def. 0).");
