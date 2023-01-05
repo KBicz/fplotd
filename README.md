@@ -1,7 +1,7 @@
 # fplotd
 fplotd - rust program to plot data and create scientific plot ready for publication from given file, code uses gnuplot crate created by SiegeLord (https://github.com/SiegeLord/RustGnuplot).
 
-  Usage: fplotd <[-f=]str> [-xc=i64] [-yc=i64] [-xerr=i64] [-yerr=i64] [-xmin=f64] [-xmax=f64]
+    Usage: fplotd <[-f=]str> [-xc=i64] [-yc=i64] [-xerr=i64] [-yerr=i64] [-xmin=f64] [-xmax=f64]
          [-ymin=f64] [-ymax=f64] [-xlab=str] [-ylab=str] [-tit=str] -lsty=i64] [-syms=char]
          [-mars=f64] [-xwid=i64] [-ywid=i64] [-xpos=f64] [-ypos=f64] [-thk=f64] [-legx=f64]
          [-legy=f64] [-com=char] [-head=i64] [-deli=str] [-xw=f64] [-yw=f64] [-fonts=i64]
