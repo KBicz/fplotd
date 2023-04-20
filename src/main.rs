@@ -14,9 +14,9 @@ fn helpf()
     println!("\n  Usage: fplotd <[-f=]str> [-xc=i64] [-yc=i64] [-xerr=i64] [-yerr=i64] [-xmin=f64] [-xmax=f64]");
     println!("         [-ymin=f64] [-ymax=f64] [-xlab=str] [-ylab=str] [-tit=str] -lsty=i64] [-syms=char]");
     println!("         [-mars=f64] [-xwid=i64] [-ywid=i64] [-xpos=f64] [-ypos=f64] [-thk=f64] [-legx=f64]"); 
-    println!("         [-legy=f64] [-com=char] [-head=i64] [-deli=str] [-xw=f64] [-yw=f64] [-fonts=i64]");
-    println!("         [-fontx=i64] [-fonty=i64] [-fontt=i64] [--save[=str]] [--leg] [--xlog] [--ylog] [--xln]"); 
-    println!("         [--yln] [--min] [--max] [--pal] [--qt] [--line]\n");
+    println!("         [-legy=f64] [-com=char] [-head=i64] [-deli=str] [-nth=i64] [-xw=f64] [-yw=f64]");
+    println!("         [-fonts=i64][-fontx=i64] [-fonty=i64] [-fontt=i64] [--save[=str]] [--leg] [--xlog] [--ylog]"); 
+    println!("         [--xln] [--yln] [--min] [--max] [--pal] [--qt] [--line]\n");
     println!("         option  -f     : input file (for multiple files div. between files is \",\".)");
     println!("                 -xc    : x column to plot (def. 1, for multiple files div. between columns is \",\").");
     println!("                 -yc    : y column to plot (def. 2, for multiple files div. between columns is \",\").");
@@ -31,7 +31,7 @@ fn helpf()
     println!("                 -tit   : plot title name.");
     println!("                 -lsty  : line style (def. Solid, SmallDot, Dot, Dash, DotDash, DotDotDash).");
     println!("                 -syms  : symbol style (def. \"O\").");
-    println!("                 -mars  : symbol size (def. 0.75).");
+    println!("                 -mars  : symbol size (def. 0.5).");
     println!("                 -xwid  : x width of window while displaying plot (default 1000 px).");  
     println!("                 -ywid  : y height of window while displaying plot (default 600 px).");
     println!("                 -xpos  : x position of plot window (variates from 0 to 1, def. 0).");
@@ -42,6 +42,7 @@ fn helpf()
     println!("                 -com   : comment symbol (def. \"#\").");
     println!("                 -head  : number of lines used as a header if not commented (default head = 0).");
     println!("                 -deli  : delimiter symbol (def. \" \")."); 
+    println!("                 -nth   : read every nth data point (def. nth = 1).");
     println!("                 -xw    : x scale width of window while saving to  pdf\\eps (default 10 times normal).");
     println!("                 -yw    : y scale height of window while saving to pdf\\eps (default 5 times normal).");  
     println!("                 -fonts : size of font on x & y axis.");  
@@ -78,11 +79,11 @@ fn main() -> Result<(), &'static str>
     let (ymino, ymaxo, xmino, xmaxo): (f64, f64, f64, f64);
     let (mut xmins, mut xmaxs): (Vec<f64>, Vec<f64>) = (vec![], vec![]);
     let (mut ymins, mut ymaxs): (Vec<f64>, Vec<f64>) = (vec![], vec![]);
-    let (mut xc, mut yc): (Vec<&str>, Vec<&str>) = (vec!["0"],vec!["1"]);
     let (mut xw, mut yw, mut fonts): (u32, u32, f64) = (10u32, 5u32, 15.0f64);
     let (mut legx, mut legy, mut header): (f64, f64, usize) = (0.99, 0.99, 0);
     let (mut files, mut savename) : (Vec<&str>, &str) = (vec!["input.txt"], "plot.pdf");  
     let (mut fontx, mut fonty, mut fontt): (f64, f64, f64) = (15.0f64, 15.0f64, 13.0f64);
+    let (mut xc, mut yc, mut nth): (Vec<&str>, Vec<&str>, usize) = (vec!["0"],vec!["1"],1);
     let (mut xmin, mut xmax, mut ymin, mut ymax): (f64, f64, f64, f64) = (0f64, 0f64, 0f64, 0f64);
     let (mut xwid, mut ywid, mut xpos, mut ypos): (u32, u32, f64, f64) = (1000u32,600u32,0f64,0f64);
     let (mut xminc, mut xmaxc, mut yminc, mut ymaxc): (bool, bool, bool, bool) = (false, false, false, false);
@@ -122,6 +123,7 @@ fn main() -> Result<(), &'static str>
             else if argv[i].contains("-com=") {v = argv[i].split("=").collect(); com = v[1].parse().unwrap();}
             else if argv[i].contains("-head=") {v = argv[i].split("=").collect(); header = v[1].parse().unwrap();}
             else if argv[i].contains("-deli=") {v = argv[i].split("=").collect(); deli = v[1].parse().unwrap();}
+            else if argv[i].contains("-nth=") {v = argv[i].split("=").collect(); nth = v[1].parse().unwrap();}
             else if argv[i].contains("-xw=") {v = argv[i].split("=").collect(); xw = v[1].parse().unwrap();}
             else if argv[i].contains("-yw=") {v = argv[i].split("=").collect(); yw = v[1].parse().unwrap();}
             else if argv[i].contains("-xwid") {v = argv[i].split("=").collect(); xwid = v[1].parse().unwrap();}
@@ -168,7 +170,7 @@ fn main() -> Result<(), &'static str>
         if std::path::Path::new(files[i]).exists() 
         {
             legendstr.push(files[i]);
-            result = readdata::read_data(files[i], xc[i].parse().unwrap(), yc[i].parse().unwrap(), errxc, erryc, errxctrl, erryctrl, com, header, deli);
+            result = readdata::read_data(files[i], xc[i].parse().unwrap(), yc[i].parse().unwrap(), errxc, erryc, errxctrl, erryctrl, com, header, deli, nth);
             xdata.push(result.0);
             ydata.push(result.1);
             errx.push(result.2);
@@ -199,7 +201,7 @@ fn main() -> Result<(), &'static str>
     if !ymaxc { ymax = ymaxo.clone(); ymin -= (ymax-ymin)*0.05; }
 
     if !xminc { xmin = xmins.iter().fold(f64::INFINITY, |a, &b| a.min(b)); }
-    if !xmaxc { xmax = xmaxs.iter().fold(f64::INFINITY, |a, &b| a.min(b)); xmax += (xmax-xmin)*0.05; }
+    if !xmaxc { xmax = xmaxs.iter().fold(f64::NEG_INFINITY, |a, &b| a.max(b)); xmax += (xmax-xmin)*0.05; }
     if !xminc { xmin -= (xmax-xmin)*0.05; }
     if !yminc { ymax += (ymax-ymin)*0.05; }
 
