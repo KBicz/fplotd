@@ -15,8 +15,8 @@ fn helpf()
     println!("         [-ymin=f64] [-ymax=f64] [-xlab=str] [-ylab=str] [-tit=str] -lsty=i64] [-syms=char]");
     println!("         [-mars=f64] [-xwid=i64] [-ywid=i64] [-xpos=f64] [-ypos=f64] [-thk=f64] [-legx=f64]"); 
     println!("         [-legy=f64] [-com=char] [-head=i64] [-deli=str] [-nth=i64] [-xw=f64] [-yw=f64]");
-    println!("         [-fonts=i64][-fontx=i64] [-fonty=i64] [-fontt=i64] [--save[=str]] [--leg] [--xlog] [--ylog]"); 
-    println!("         [--xln] [--yln] [--min] [--max] [--pal] [--qt] [--line]\n");
+    println!("         [-fonts=i64] [-fontx=i64] [-fonty=i64] [-fontt=i64] [-phase=f64] [--save[=str]] [--leg]"); 
+    println!("         [--xlog]  [--ylog] [--xln] [--yln] [--min] [--max] [--pal] [--qt] [--line]\n");
     println!("         option  -f     : input file (for multiple files div. between files is \",\".)");
     println!("                 -xc    : x column to plot (def. 1, for multiple files div. between columns is \",\").");
     println!("                 -yc    : y column to plot (def. 2, for multiple files div. between columns is \",\").");
@@ -49,6 +49,7 @@ fn helpf()
     println!("                 -fontx : size of font of x axis.");  
     println!("                 -fonty : size of font of y axis.");  
     println!("                 -fontt : size of font of title.");  
+    println!("                 -phase : phase data using given period (default period = 1.0).");
     println!("                 --save : savename to save plot (possible formats: pdf, eps, png, svg).");
     println!("                 --leg  : show legend.");
     println!("                 --xlog : x axis to base 10 logarithm.");
@@ -80,7 +81,6 @@ fn main() -> Result<(), &'static str>
     let (mut xmins, mut xmaxs): (Vec<f64>, Vec<f64>) = (vec![], vec![]);
     let (mut ymins, mut ymaxs): (Vec<f64>, Vec<f64>) = (vec![], vec![]);
     let (mut xw, mut yw, mut fonts): (u32, u32, f64) = (10u32, 5u32, 15.0f64);
-    let (mut legx, mut legy, mut header): (f64, f64, usize) = (0.99, 0.99, 0);
     let (mut files, mut savename) : (Vec<&str>, &str) = (vec!["input.txt"], "plot.pdf");  
     let (mut fontx, mut fonty, mut fontt): (f64, f64, f64) = (15.0f64, 15.0f64, 13.0f64);
     let (mut xc, mut yc, mut nth): (Vec<&str>, Vec<&str>, usize) = (vec!["0"],vec!["1"],1);
@@ -89,6 +89,7 @@ fn main() -> Result<(), &'static str>
     let (mut xminc, mut xmaxc, mut yminc, mut ymaxc): (bool, bool, bool, bool) = (false, false, false, false);
     let (mut lsty, mut syms, mut mars, mut thk): (String, char, f64, f64) = ("Solid".to_string(),'O',0.75,2.0);
     let (mut xlabel, mut ylabel, mut tit): (String, String, String) = ("X []".to_string(),"Y []".to_string(),"".to_string());
+    let (mut legx, mut legy, mut header, mut period, mut phasectrl): (f64, f64, usize, f64, bool) = (0.99, 0.99, 0, 1.0, false);
     let (mut errxctrl, mut erryctrl, mut errxc, mut erryc): (bool, bool, usize, usize) = (false, false, 3 as usize, 4 as usize);
     let (mut log10x, mut log10y, mut lnx, mut lny, mut linectrl): (bool, bool, bool, bool, bool) = (false, false, false, false,false);
     let (mut minctrl, mut maxctrl, mut legctrl, mut pal, mut savectrl): (bool, bool, bool, bool, bool) = (false, false, false, false, false);
@@ -134,6 +135,7 @@ fn main() -> Result<(), &'static str>
             else if argv[i].contains("-fontx=") {v = argv[i].split("=").collect(); fontx = v[1].parse().unwrap();}
             else if argv[i].contains("-fonty=") {v = argv[i].split("=").collect(); fonty = v[1].parse().unwrap();}
             else if argv[i].contains("-fontt=") {v = argv[i].split("=").collect(); fontt = v[1].parse().unwrap();}
+            else if argv[i].contains("-phase=") {v = argv[i].split("=").collect(); period = v[1].parse().unwrap(); phasectrl = true;}
             else if argv[i].contains("--save") 
             { savectrl = true; if argv[i].contains("=") {v = argv[i].split("=").collect(); savename = v[1];} }
             else if argv[i].eq("--leg") {legctrl = true;}   
@@ -175,6 +177,8 @@ fn main() -> Result<(), &'static str>
             ydata.push(result.1);
             errx.push(result.2);
             erry.push(result.3);
+
+            if phasectrl { for j in 0..xdata[i].len() { xdata[i][j] = xdata[i][j]/period%1.0; } }
         }
 
         if lnx { xdata[i] = loge::ln(&xdata[i]).to_vec(); }
