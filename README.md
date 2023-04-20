@@ -5,11 +5,11 @@ fplotd - rust program to plot data and create scientific plot ready for publicat
   Plot data from given file.
 
     Usage: fplotd <[-f=]str> [-xc=i64] [-yc=i64] [-xerr=i64] [-yerr=i64] [-xmin=f64] [-xmax=f64]
-         [-ymin=f64] [-ymax=f64] [-xlab=str] [-ylab=str] [-tit=str] -lsty=i64] [-syms=char]
-         [-mars=f64] [-xwid=i64] [-ywid=i64] [-xpos=f64] [-ypos=f64] [-thk=f64] [-legx=f64]
-         [-legy=f64] [-com=char] [-head=i64] [-deli=str] [-nth=i64] [-xw=f64] [-yw=f64]
-         [-fonts=i64][-fontx=i64] [-fonty=i64] [-fontt=i64] [--save[=str]] [--leg] [--xlog] [--ylog]
-         [--xln] [--yln] [--min] [--max] [--pal] [--qt] [--line]
+           [-ymin=f64] [-ymax=f64] [-xlab=str] [-ylab=str] [-tit=str] -lsty=i64] [-syms=char]
+           [-mars=f64] [-xwid=i64] [-ywid=i64] [-xpos=f64] [-ypos=f64] [-thk=f64] [-legx=f64]
+           [-legy=f64] [-com=char] [-head=i64] [-deli=str] [-nth=i64] [-xw=f64] [-yw=f64]
+           [-fonts=i64][-fontx=i64] [-fonty=i64] [-fontt=i64] [--save[=str]] [--leg] [--xlog] [--ylog]
+           [--xln] [--yln] [--min] [--max] [--pal] [--qt] [--line]
 
          option  -f     : input file (for multiple files div. between files is ",".)
                  -xc    : x column to plot (def. 1, for multiple files div. between columns is ",").
