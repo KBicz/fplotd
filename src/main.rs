@@ -9,7 +9,7 @@ use std::process::exit;
 
 fn helpf() 
 {
-    println!("\n  Program fplotd for MacOS, Linux and Windows written by K. Bicz, ver. of Aug 1, 2021.");
+    println!("\n  Program fplotd for Linux, MacOS, and Windows written by K. Bicz, ver. of Aug 1, 2021.");
     println!("  Plot data from given file.");
     println!("\n  Usage: fplotd <[-f=]str(s)> [-xc=i64] [-yc=i64] [-xerr=i64] [-yerr=i64] [-xmin=f64] [-xmax=f64]");
     println!("         [-ymin=f64] [-ymax=f64] [-xlab=str] [-ylab=str] [-tit=str] -lsty=i64] [-syms=char]");
@@ -51,6 +51,8 @@ fn helpf()
     println!("                 -fonty : size of font of y axis.");  
     println!("                 -fontt : size of font of title.");  
     println!("                 -phase : phase data using given period (default period = 1.0).");
+    println!("                 -hline : plot horizontal line (you can divide lines using comma \",\").");    
+    println!("                 -vline : plot vertical line (you can divide lines using comma \",\").");
     println!("                 --save : savename to save plot (possible formats: pdf, eps, png, svg).");
     println!("                 --leg  : show legend.");
     println!("                 --xlog : x axis to base 10 logarithm.");
