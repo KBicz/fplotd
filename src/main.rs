@@ -11,12 +11,13 @@ fn helpf()
 {
     println!("\n  Program fplotd for MacOS, Linux and Windows written by K. Bicz, ver. of Aug 1, 2021.");
     println!("  Plot data from given file.");
-    println!("\n  Usage: fplotd <[-f=]str> [-xc=i64] [-yc=i64] [-xerr=i64] [-yerr=i64] [-xmin=f64] [-xmax=f64]");
+    println!("\n  Usage: fplotd <[-f=]str(s)> [-xc=i64] [-yc=i64] [-xerr=i64] [-yerr=i64] [-xmin=f64] [-xmax=f64]");
     println!("         [-ymin=f64] [-ymax=f64] [-xlab=str] [-ylab=str] [-tit=str] -lsty=i64] [-syms=char]");
     println!("         [-mars=f64] [-xwid=i64] [-ywid=i64] [-xpos=f64] [-ypos=f64] [-thk=f64] [-legx=f64]"); 
     println!("         [-legy=f64] [-com=char] [-head=i64] [-deli=str] [-nth=i64] [-xw=f64] [-yw=f64]");
-    println!("         [-fonts=i64] [-fontx=i64] [-fonty=i64] [-fontt=i64] [-phase=f64] [--save[=str]] [--leg]"); 
-    println!("         [--xlog]  [--ylog] [--xln] [--yln] [--min] [--max] [--pal] [--qt] [--line]\n");
+    println!("         [-fonts=i64] [-fontx=i64] [-fonty=i64] [-fontt=i64] [-phase=f64] [-hline=f64] [-vline=f64]");
+    println!("         [--save[=str]] [--leg] [--xlog]  [--ylog] [--xln] [--yln] [--min] [--max] [--pal] [--qt]");
+    println!("         [--line]\n");
     println!("         option  -f     : input file (for multiple files div. between files is \",\".)");
     println!("                 -xc    : x column to plot (def. 1, for multiple files div. between columns is \",\").");
     println!("                 -yc    : y column to plot (def. 2, for multiple files div. between columns is \",\").");
@@ -94,6 +95,7 @@ fn main() -> Result<(), &'static str>
     let (mut log10x, mut log10y, mut lnx, mut lny, mut linectrl): (bool, bool, bool, bool, bool) = (false, false, false, false,false);
     let (mut minctrl, mut maxctrl, mut legctrl, mut pal, mut savectrl): (bool, bool, bool, bool, bool) = (false, false, false, false, false);
     let (mut xdata, mut ydata, mut errx, mut erry): (Vec<Vec<f64>>,Vec<Vec<f64>>,Vec<Vec<f64>>,Vec<Vec<f64>>) = (vec![],vec![],vec![],vec![]);
+    let (mut hline, mut vline, mut hlinevecx, mut hlinevecy, mut vlinevecx, mut vlinevecy): (Vec<&str>, Vec<&str>, Vec<Vec<f64>>, Vec<Vec<f64>>, Vec<Vec<f64>>, Vec<Vec<f64>>) = (vec![""], vec![""], vec![], vec![], vec![], vec![]);
 
     if argc < 2 {helpf();}
     else if argc == 2 && !argv[1].eq("--help") && !argv[1].eq("-h") { files[0] = &argv[1]; }
@@ -136,6 +138,8 @@ fn main() -> Result<(), &'static str>
             else if argv[i].contains("-fonty=") {v = argv[i].split("=").collect(); fonty = v[1].parse().unwrap();}
             else if argv[i].contains("-fontt=") {v = argv[i].split("=").collect(); fontt = v[1].parse().unwrap();}
             else if argv[i].contains("-phase=") {v = argv[i].split("=").collect(); period = v[1].parse().unwrap(); phasectrl = true;}
+            else if argv[i].contains("-hline=") {v = argv[i].split("=").collect(); hline[0] = v[1];}
+            else if argv[i].contains("-vline=") {v = argv[i].split("=").collect(); vline[0] = v[1];}
             else if argv[i].contains("--save") 
             { savectrl = true; if argv[i].contains("=") {v = argv[i].split("=").collect(); savename = v[1];} }
             else if argv[i].eq("--leg") {legctrl = true;}   
@@ -159,6 +163,8 @@ fn main() -> Result<(), &'static str>
     if savectrl && !savename.eq("plot.pdf") { sformat = checkformat::checkformat(savename.to_string()); }
     
     if files[0].contains(",") { files = files[0].split(",").collect(); }
+    if hline[0].contains(",") { hline = hline[0].split(",").collect();}
+    if vline[0].contains(",") { vline = vline[0].split(",").collect();}
     if xc[0].contains(",") { xc = xc[0].split(",").collect(); }
     else { for _ in 1..files.len() {xc.push(xc[0]);}}
     if yc[0].contains(",") { yc = yc[0].split(",").collect(); }
@@ -222,5 +228,23 @@ fn main() -> Result<(), &'static str>
         xmin -= errx[helpx][xdata[helpx].clone().iter().position(|&r| r == xmin).unwrap()];
     } 
 
-    plotd::fplot(xdata,ydata,errx,erry,xmin,xmax,ymin,ymax,xw,yw,fonts,fontx,fonty,fontt,xwid,ywid,xpos,ypos,xlabel,ylabel,tit,lsty,syms,mars,thk,legx,legy,legctrl,minctrl,maxctrl,xmino,xmaxo,ymino,ymaxo,pal,linectrl,errxctrl,erryctrl,legendstr,savectrl,sformat,savename,qt)
+    if !vline[0].eq("") 
+    {
+        for i in 0..vline.len()
+        {
+            vlinevecy.push(readdata::rangef64(ymin,ymax,(ymax-ymin)/1000.0));
+            vlinevecx.push(vec![vline[i].parse().unwrap(); vlinevecy[i].len()]);
+            
+        }
+    }
+    if !hline[0].eq("") 
+    {
+        for i in 0..hline.len()
+        {
+            hlinevecx.push(readdata::rangef64(xmin,xmax,(xmax-xmin)/1000.0));
+            hlinevecy.push(vec![hline[i].parse().unwrap(); hlinevecx[i].len()]);
+        }
+    }
+
+    plotd::fplot(xdata,ydata,errx,erry,xmin,xmax,ymin,ymax,xw,yw,fonts,fontx,fonty,fontt,xwid,ywid,xpos,ypos,xlabel,ylabel,tit,lsty,syms,mars,thk,legx,legy,legctrl,minctrl,maxctrl,xmino,xmaxo,ymino,ymaxo,pal,linectrl,errxctrl,erryctrl,legendstr,savectrl,sformat,savename,qt,hlinevecx,hlinevecy,vlinevecx,vlinevecy)
 }

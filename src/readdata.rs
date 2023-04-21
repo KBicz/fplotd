@@ -8,6 +8,14 @@ pub fn range(start: i32, stop: i32, step: usize) -> Vec<f64>
     return result;
 }
 
+pub fn rangef64(start: f64, stop: f64, step: f64) -> Vec<f64>
+{
+    let nel: usize = ((stop-start)/step) as usize;
+    let mut result: Vec<f64> = vec![start; nel];
+    for i in 0..nel { result[i] += (i as f64) *step; }
+    return result;
+}
+
 pub fn read_data(path: &str, xc: usize, yc: usize, errxc: usize, erryc: usize, errxctrl: bool, erryctrl: bool, com: char, header: usize, deli: char, nth: usize) -> (Vec<f64>,Vec<f64>,Vec<f64>,Vec<f64>)
 {
     let data = fs::read_to_string(path).expect("# Unable to read file!!");

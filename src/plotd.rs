@@ -1,7 +1,7 @@
 use std::process::exit;
 use gnuplot::{Figure, Caption, Color, Graph, AxesCommon, PointSymbol, PointSize, LineWidth, Fix, Font, LineStyle, Solid, SmallDot, Dot, Dash, DotDash, DotDotDash, AutoOption::Auto, TickOption::{MajorScale, MinorScale}};
 
-pub fn fplot(x: Vec<Vec<f64>>, y: Vec<Vec<f64>>, errx: Vec<Vec<f64>>, erry: Vec<Vec<f64>>, xmin: f64, xmax: f64, ymin: f64, ymax: f64, xw: u32, yw: u32, fonts: f64, fontx: f64, fonty: f64, fontt: f64, xwid: u32, ywid: u32, xpos: f64, ypos: f64, xlabel: String, ylabel: String, tit: String, lsty: String, syms: char, mars: f64, thk: f64, legx: f64, legy: f64, legctrl: bool, minctrl: bool, maxctrl: bool, xmino: f64, xmaxo: f64, ymino: f64, ymaxo: f64, pal: bool, linectrl: bool, errxctrl: bool, erryctrl: bool, legendstr: Vec<&str>, savectrl: bool, sformat: String, savename: &str, qt: bool) -> Result<(), &'static str> 
+pub fn fplot(x: Vec<Vec<f64>>, y: Vec<Vec<f64>>, errx: Vec<Vec<f64>>, erry: Vec<Vec<f64>>, xmin: f64, xmax: f64, ymin: f64, ymax: f64, xw: u32, yw: u32, fonts: f64, fontx: f64, fonty: f64, fontt: f64, xwid: u32, ywid: u32, xpos: f64, ypos: f64, xlabel: String, ylabel: String, tit: String, lsty: String, syms: char, mars: f64, thk: f64, legx: f64, legy: f64, legctrl: bool, minctrl: bool, maxctrl: bool, xmino: f64, xmaxo: f64, ymino: f64, ymaxo: f64, pal: bool, linectrl: bool, errxctrl: bool, erryctrl: bool, legendstr: Vec<&str>, savectrl: bool, sformat: String, savename: &str, qt: bool, hlinex: Vec<Vec<f64>>, hliney: Vec<Vec<f64>>, vlinex: Vec<Vec<f64>>, vliney: Vec<Vec<f64>>) -> Result<(), &'static str> 
 {
     let mut col: &str;
     let linesty;
@@ -48,6 +48,15 @@ pub fn fplot(x: Vec<Vec<f64>>, y: Vec<Vec<f64>>, errx: Vec<Vec<f64>>, erry: Vec<
             if legctrl { ax.points(x[i].clone(),y[i].clone(),&[Color(col),PointSymbol(syms),PointSize(mars),Caption(&legendstr[i].replace("_","\\_"))]); }
             else { ax.points(x[i].clone(),y[i].clone(),&[Color(col),PointSymbol(syms),PointSize(mars)]); }
         }
+    }
+    
+    for i in 0..hlinex.len()
+    {
+        ax.lines(hlinex[i].clone(),hliney[i].clone(),&[LineStyle(linesty),Color("black"),LineWidth(thk)]);
+    }
+    for i in 0..vlinex.len()
+    {
+        ax.lines(vlinex[i].clone(),vliney[i].clone(),&[LineStyle(linesty),Color("black"),LineWidth(thk)]);
     }
 
     if minctrl { ax.points(vec![xmino],vec![ymino],&[Color("#e60000"),PointSymbol(syms),PointSize(mars),Caption(&format!("Minimal value = {}",ymino))]); }
