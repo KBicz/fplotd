@@ -4,12 +4,16 @@ fplotd - rust program to plot data and create scientific plot ready for publicat
   Program fplotd for MacOS, Linux and Windows written by K. Bicz, ver. of Aug 1, 2021.
   Plot data from given file.
 
-    Usage: fplotd <[-f=]str> [-xc=i64] [-yc=i64] [-xerr=i64] [-yerr=i64] [-xmin=f64] [-xmax=f64]
-           [-ymin=f64] [-ymax=f64] [-xlab=str] [-ylab=str] [-tit=str] -lsty=i64] [-syms=char]
-           [-mars=f64] [-xwid=i64] [-ywid=i64] [-xpos=f64] [-ypos=f64] [-thk=f64] [-legx=f64]
-           [-legy=f64] [-com=char] [-head=i64] [-deli=str] [-nth=i64] [-xw=f64] [-yw=f64]
-           [-fonts=i64][-fontx=i64] [-fonty=i64] [-fontt=i64] [--save[=str]] [--leg] [--xlog] [--ylog]
-           [--xln] [--yln] [--min] [--max] [--pal] [--qt] [--line]
+  Program fplotd for Linux, MacOS, and Windows written by K. Bicz, ver. of Aug 1, 2021.
+  Plot data from given file.
+
+    Usage: fplotd <[-f=]str(s)> [-xc=i64] [-yc=i64] [-xerr=i64] [-yerr=i64] [-xmin=f64] [-xmax=f64]
+                  [-ymin=f64] [-ymax=f64] [-xlab=str] [-ylab=str] [-tit=str] -lsty=i64] [-syms=char]
+                  [-mars=f64] [-xwid=i64] [-ywid=i64] [-xpos=f64] [-ypos=f64] [-thk=f64] [-legx=f64]
+                  [-legy=f64] [-com=char] [-head=i64] [-deli=str] [-nth=i64] [-xw=f64] [-yw=f64]
+                  [-fonts=i64] [-fontx=i64] [-fonty=i64] [-fontt=i64] [-phase=f64] [-hline=f64] [-vline=f64]
+                  [--save[=str]] [--leg] [--xlog]  [--ylog] [--xln] [--yln] [--min] [--max] [--pal] [--qt]
+                  [--line]
 
          option  -f     : input file (for multiple files div. between files is ",".)
                  -xc    : x column to plot (def. 1, for multiple files div. between columns is ",").
@@ -43,6 +47,9 @@ fplotd - rust program to plot data and create scientific plot ready for publicat
                  -fontx : size of font of x axis.
                  -fonty : size of font of y axis.
                  -fontt : size of font of title.
+                 -phase : phase data using given period (default period = 1.0).
+                 -hline : plot horizontal line (you can divide lines using comma ",").
+                 -vline : plot vertical line (you can divide lines using comma ",").
                  --save : savename to save plot (possible formats: pdf, eps, png, svg).
                  --leg  : show legend.
                  --xlog : x axis to base 10 logarithm.
