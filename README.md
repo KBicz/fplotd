@@ -1,11 +1,10 @@
 # fplotd
 fplotd - rust program to plot data and create scientific plot ready for publication from given file, code uses gnuplot crate created by SiegeLord (https://github.com/SiegeLord/RustGnuplot). Compile it using command "cargo build --release".
 
-  Program fplotd for MacOS, Linux and Windows written by K. Bicz, ver. of Aug 1, 2021.
-  Plot data from given file.
+To run the code properly you have to install gnuplot.
 
-  Program fplotd for Linux, MacOS, and Windows written by K. Bicz, ver. of Aug 1, 2021.
-  Plot data from given file.
+    Program fplotd for Linux, MacOS, and Windows written by K. Bicz, ver. of Aug 1, 2021.
+    Plot data from given file.
 
     Usage: fplotd <[-f=]str(s)> [-xc=i64] [-yc=i64] [-xerr=i64] [-yerr=i64] [-xmin=f64] [-xmax=f64]
                   [-ymin=f64] [-ymax=f64] [-xlab=str] [-ylab=str] [-tit=str] -lsty=i64] [-syms=char]
