@@ -62,7 +62,7 @@ fn helpf()
     println!("                 --min  : point minimal value (only with --leg).");
     println!("                 --max  : point maximal value (only with --leg).");
     println!("                 --pal  : lines and symbols.");
-    println!("                 --qt   : set terminal to qt (only usable in linux).");
+    println!("                 --qt   : set terminal to qt (only usable in Linux).");
     println!("                 --line : plot line.\n");
     exit(0);
 }
@@ -83,12 +83,12 @@ fn main() -> Result<(), &'static str>
     let (ymino, ymaxo, xmino, xmaxo): (f64, f64, f64, f64);
     let (mut xmins, mut xmaxs): (Vec<f64>, Vec<f64>) = (vec![], vec![]);
     let (mut ymins, mut ymaxs): (Vec<f64>, Vec<f64>) = (vec![], vec![]);
-    let (mut xw, mut yw, mut fonts): (u32, u32, f64) = (10u32, 5u32, 15.0f64);
+    let (mut xw, mut yw, mut fonts): (f32, f32, f64) = (10f32, 5f32, 15.0f64);
     let (mut files, mut savename) : (Vec<&str>, &str) = (vec!["input.txt"], "plot.pdf");  
     let (mut fontx, mut fonty, mut fontt): (f64, f64, f64) = (15.0f64, 15.0f64, 13.0f64);
     let (mut xc, mut yc, mut nth): (Vec<&str>, Vec<&str>, usize) = (vec!["0"],vec!["1"],1);
     let (mut xmin, mut xmax, mut ymin, mut ymax): (f64, f64, f64, f64) = (0f64, 0f64, 0f64, 0f64);
-    let (mut xwid, mut ywid, mut xpos, mut ypos): (u32, u32, f64, f64) = (1000u32,600u32,0f64,0f64);
+    let (mut xwid, mut ywid, mut xpos, mut ypos): (f32, f32, f64, f64) = (1000f32,600f32,0f64,0f64);
     let (mut xminc, mut xmaxc, mut yminc, mut ymaxc): (bool, bool, bool, bool) = (false, false, false, false);
     let (mut lsty, mut syms, mut mars, mut thk): (String, char, f64, f64) = ("Solid".to_string(),'O',0.75,2.0);
     let (mut xlabel, mut ylabel, mut tit): (String, String, String) = ("X []".to_string(),"Y []".to_string(),"".to_string());

@@ -1,7 +1,7 @@
 use std::process::exit;
 use gnuplot::{Figure, Caption, Color, Graph, AxesCommon, PointSymbol, PointSize, LineWidth, Fix, Font, LineStyle, Solid, SmallDot, Dot, Dash, DotDash, DotDotDash, AutoOption::Auto, TickOption::{MajorScale, MinorScale}};
 
-pub fn fplot(x: Vec<Vec<f64>>, y: Vec<Vec<f64>>, errx: Vec<Vec<f64>>, erry: Vec<Vec<f64>>, xmin: f64, xmax: f64, ymin: f64, ymax: f64, xw: u32, yw: u32, fonts: f64, fontx: f64, fonty: f64, fontt: f64, xwid: u32, ywid: u32, xpos: f64, ypos: f64, xlabel: String, ylabel: String, tit: String, lsty: String, syms: char, mars: f64, thk: f64, legx: f64, legy: f64, legctrl: bool, minctrl: bool, maxctrl: bool, xmino: f64, xmaxo: f64, ymino: f64, ymaxo: f64, pal: bool, linectrl: bool, errxctrl: bool, erryctrl: bool, legendstr: Vec<&str>, savectrl: bool, sformat: String, savename: &str, qt: bool, hlinex: Vec<Vec<f64>>, hliney: Vec<Vec<f64>>, vlinex: Vec<Vec<f64>>, vliney: Vec<Vec<f64>>) -> Result<(), &'static str> 
+pub fn fplot(x: Vec<Vec<f64>>, y: Vec<Vec<f64>>, errx: Vec<Vec<f64>>, erry: Vec<Vec<f64>>, xmin: f64, xmax: f64, ymin: f64, ymax: f64, xw: f32, yw: f32, fonts: f64, fontx: f64, fonty: f64, fontt: f64, xwid: f32, ywid: f32, xpos: f64, ypos: f64, xlabel: String, ylabel: String, tit: String, lsty: String, syms: char, mars: f64, thk: f64, legx: f64, legy: f64, legctrl: bool, minctrl: bool, maxctrl: bool, xmino: f64, xmaxo: f64, ymino: f64, ymaxo: f64, pal: bool, linectrl: bool, errxctrl: bool, erryctrl: bool, legendstr: Vec<&str>, savectrl: bool, sformat: String, savename: &str, qt: bool, hlinex: Vec<Vec<f64>>, hliney: Vec<Vec<f64>>, vlinex: Vec<Vec<f64>>, vliney: Vec<Vec<f64>>) -> Result<(), &'static str> 
 {
     let mut col: &str;
     let linesty;
@@ -72,7 +72,7 @@ pub fn fplot(x: Vec<Vec<f64>>, y: Vec<Vec<f64>>, errx: Vec<Vec<f64>>, erry: Vec<
     {
         if sformat.eq("pdf") { let _a = fig.save_to_pdf(savename, xw, yw);}
         else if sformat.eq("eps") { let _a = fig.save_to_eps(savename, xw, yw);}
-        else if sformat.eq("png") { let _a = fig.save_to_png(savename, xwid, ywid);}
+        else if sformat.eq("png") { let _a = fig.save_to_png(savename, xwid as u32, ywid as u32);}
         else if sformat.eq("svg") { let _a = fig.save_to_pdf(savename, xwid, ywid);}
         else {exit(1);}
     }
