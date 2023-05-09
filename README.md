@@ -7,9 +7,9 @@ To run the code properly you have to install gnuplot.
     Plot data from given file.
 
     Usage: fplotd <[-f=]str(s)> [-xc=i64] [-yc=i64] [-xerr=i64] [-yerr=i64] [-xmin=f64] [-xmax=f64]
-                  [-ymin=f64] [-ymax=f64] [-xlab=str] [-ylab=str] [-tit=str] -lsty=i64] [-syms=char]
+                  [-ymin=f64] [-ymax=f64] [-xlab=str] [-ylab=str] [-tit=str] [-lsty=i64] [-syms=char]
                   [-mars=f64] [-xwid=i64] [-ywid=i64] [-xpos=f64] [-ypos=f64] [-thk=f64] [-legx=f64]
-                  [-legy=f64] [-com=char] [-head=i64] [-deli=str] [-nth=i64] [-xw=f64] [-yw=f64]
+                  [-legy=f64] [-com=char] [-head=i64] [-deli=str] [-nth=i64] [-xw=f32] [-yw=f32]
                   [-fonts=i64] [-fontx=i64] [-fonty=i64] [-fontt=i64] [-phase=f64] [-hline=f64] [-vline=f64]
                   [--save[=str]] [--leg] [--xlog]  [--ylog] [--xln] [--yln] [--min] [--max] [--pal] [--qt]
                   [--line]
