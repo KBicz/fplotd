@@ -6,7 +6,7 @@ pub fn fplot(x: Vec<Vec<f64>>, y: Vec<Vec<f64>>, errx: Vec<Vec<f64>>, erry: Vec<
     let mut col: &str;
     let linesty;
     let mut fig = Figure::new();
-    let colors: Vec<&str> = vec!["#1f77b4","#d62728","#2ca02c","#ff7f0e","#9467bd","#8c564b","#e377c2","#7f7f7f","#bcbd22","#17becf"];
+    let colors: Vec<&str> = vec!["#1f77b4","#d62728","#2ca02c","#ff7f0e","#7833DD","#8c564b","#e377c2","#7f7f7f","#bcbd22","#17becf"];
     let mut tf = "x11";
     
     if qt {tf = "qt";}

@@ -18,7 +18,8 @@ pub fn rangef64(start: f64, stop: f64, step: f64) -> Vec<f64>
 
 pub fn read_data(path: &str, xc: usize, yc: usize, errxc: usize, erryc: usize, errxctrl: bool, erryctrl: bool, com: char, header: usize, deli: char, nth: usize) -> (Vec<f64>,Vec<f64>,Vec<f64>,Vec<f64>)
 {
-    let data = fs::read_to_string(path).expect("# Unable to read file!!");
+    let mut data: String = fs::read_to_string(path).expect("# Unable to read file!!");
+    if data.contains("\t") { data = data.replace("\t"," "); }
     let mut datavec: Vec<&str> = data.lines().collect();
     datavec = datavec.into_iter().filter(|&i| i.trim() != "" && i.chars().next().unwrap() != com).collect::<Vec<_>>();
     let (mut x, mut y, mut ex, mut ey): (Vec<f64>, Vec<f64>,Vec<f64>, Vec<f64>) = (vec![],vec![],vec![],vec![]);

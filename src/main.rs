@@ -12,9 +12,9 @@ fn helpf()
     println!("\n  Program fplotd for Linux, MacOS, and Windows written by K. Bicz, ver. of Aug 1, 2021.");
     println!("  Plot data from given file.");
     println!("\n  Usage: fplotd <[-f=]str(s)> [-xc=i64] [-yc=i64] [-xerr=i64] [-yerr=i64] [-xmin=f64] [-xmax=f64]");
-    println!("         [-ymin=f64] [-ymax=f64] [-xlab=str] [-ylab=str] [-tit=str] [-lsty=i64] [-syms=char]");
+    println!("         [-ymin=f64] [-ymax=f64] [-xlab=str] [-ylab=str] [-tit=str] -lsty=i64] [-syms=char]");
     println!("         [-mars=f64] [-xwid=i64] [-ywid=i64] [-xpos=f64] [-ypos=f64] [-thk=f64] [-legx=f64]"); 
-    println!("         [-legy=f64] [-com=char] [-head=i64] [-deli=str] [-nth=i64] [-xw=f32] [-yw=f32]");
+    println!("         [-legy=f64] [-com=char] [-head=i64] [-deli=str] [-nth=i64] [-xw=f64] [-yw=f64]");
     println!("         [-fonts=i64] [-fontx=i64] [-fonty=i64] [-fontt=i64] [-phase=f64] [-hline=f64] [-vline=f64]");
     println!("         [--save[=str]] [--leg] [--xlog]  [--ylog] [--xln] [--yln] [--min] [--max] [--pal] [--qt]");
     println!("         [--line]\n");
@@ -62,7 +62,7 @@ fn helpf()
     println!("                 --min  : point minimal value (only with --leg).");
     println!("                 --max  : point maximal value (only with --leg).");
     println!("                 --pal  : lines and symbols.");
-    println!("                 --qt   : set terminal to qt (only usable in Linux).");
+    println!("                 --qt   : set terminal to qt (only usable in linux).");
     println!("                 --line : plot line.\n");
     exit(0);
 }
@@ -83,12 +83,12 @@ fn main() -> Result<(), &'static str>
     let (ymino, ymaxo, xmino, xmaxo): (f64, f64, f64, f64);
     let (mut xmins, mut xmaxs): (Vec<f64>, Vec<f64>) = (vec![], vec![]);
     let (mut ymins, mut ymaxs): (Vec<f64>, Vec<f64>) = (vec![], vec![]);
-    let (mut xw, mut yw, mut fonts): (f32, f32, f64) = (10f32, 5f32, 15.0f64);
+    let (mut xw, mut yw, mut fonts): (f32, f32, f64) = (10.0, 5.0, 15.0f64);
     let (mut files, mut savename) : (Vec<&str>, &str) = (vec!["input.txt"], "plot.pdf");  
     let (mut fontx, mut fonty, mut fontt): (f64, f64, f64) = (15.0f64, 15.0f64, 13.0f64);
     let (mut xc, mut yc, mut nth): (Vec<&str>, Vec<&str>, usize) = (vec!["0"],vec!["1"],1);
     let (mut xmin, mut xmax, mut ymin, mut ymax): (f64, f64, f64, f64) = (0f64, 0f64, 0f64, 0f64);
-    let (mut xwid, mut ywid, mut xpos, mut ypos): (f32, f32, f64, f64) = (1000f32,600f32,0f64,0f64);
+    let (mut xwid, mut ywid, mut xpos, mut ypos): (f32, f32, f64, f64) = (1000.0,600.0,0f64,0f64);
     let (mut xminc, mut xmaxc, mut yminc, mut ymaxc): (bool, bool, bool, bool) = (false, false, false, false);
     let (mut lsty, mut syms, mut mars, mut thk): (String, char, f64, f64) = ("Solid".to_string(),'O',0.75,2.0);
     let (mut xlabel, mut ylabel, mut tit): (String, String, String) = ("X []".to_string(),"Y []".to_string(),"".to_string());
